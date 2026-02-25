@@ -1,0 +1,254 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+.medieval-font {
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.05em;
+}
+
+.top-bar {
+    background-color: #863864;
+}
+
+.category-bar {
+    background-color: #642f4d;
+}
+
+.top-bar, .category-bar {
+    font-family: 'Cinzel', serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Cinzel', serif;
+}
+
+.logo-text {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #f5e6c8;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+.top-bar-btn {
+    color: white;
+    border: 2px solid white;
+    background-color: transparent;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+    .top-bar-btn:hover {
+        color: #d9b56d;
+        border-color: #d9b56d;
+        background-color: transparent;
+    }
+
+.bottom-bar-btn:hover {
+    border-color: #d9b56d;
+    background-color: #d9b56d;
+}
+
+.category-bar {
+    height: 40px;
+    padding: 0;
+}
+
+    .category-bar .navbar-nav {
+        height: 100%;
+    }
+
+    .category-bar .nav-link {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .category-bar .nav-item {
+        height: 100%;
+    }
+
+.bottom-bar-btn {
+    height: 100%;
+}
+
+.modal-backdrop.show {
+    backdrop-filter: blur(6px);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.btn-login:hover {
+    color: white;
+    background-color: #d9b56d;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+.btn-login {
+    color: white;
+    background-color: #d9b56d;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+.btn-signup:hover {
+    color: white;
+    background-color: #d9b56d;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+.btn-signup {
+    color: #d9b56d;
+    border-color: #d9b56d;
+    background-color: transparent;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+/* Log in and Registration - ONLY center the page content, not containers globally */
+.identity-ui main {
+    display: flex;
+    justify-content: center;
+}
+
+/* Reset Bootstrap container behavior on Identity pages */
+.identity-ui .container {
+    display: block;
+}
+
+
+/* Style the main form card */
+.identity-ui main form {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(6px);
+    border: 2px solid rgba(217, 181, 109, 0.35);
+    border-radius: 14px;
+    padding: 28px;
+    margin-top: 28px;
+}
+
+/* Headings */
+.identity-ui h1,
+.identity-ui h2,
+.identity-ui h3,
+.identity-ui label {
+    font-family: 'Cinzel', serif;
+    color: #f5e6c8;
+}
+
+/* Inputs */
+.identity-ui main .form-control {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: white;
+}
+
+    .identity-ui main .form-control:focus {
+        border-color: #d9b56d;
+        box-shadow: 0 0 0 0.15rem rgba(217, 181, 109, 0.25);
+        outline: none;
+    }
+
+/* Primary buttons (Log in / Register submit) */
+.identity-ui .btn-primary {
+    background-color: #d9b56d;
+    border-color: #d9b56d;
+    color: white;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+    .identity-ui .btn-primary:hover {
+        background-color: #caa55f;
+        border-color: #caa55f;
+    }
+
+/* Links */
+.identity-ui a {
+    color: #d9b56d;
+    font-family: 'Cinzel', serif;
+}
+
+    .identity-ui a:hover {
+        color: #f5e6c8;
+        text-decoration: underline;
+    }
+
+/* Keep navbar search bar white even on Identity pages */
+.identity-ui header .form-control {
+    background: #fff;
+    color: #212529;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+header form .form-control:focus {
+    box-shadow: none !important;
+    outline: none;
+    border-color: #d9b56d;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 6px;
+    transition: box-shadow 0.2s ease;
+}
+
+    .product-card:hover {
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
+    }
+
+.product-img-wrapper {
+    height: 250px;
+    overflow: hidden;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.btn-primary {
+    background-color: #863864;
+    border-color: #863864;
+    font-family: 'Cinzel', serif;
+    transition: all 0.25s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #642f4d;
+        border-color: #642f4d;
+    }

@@ -1,0 +1,175 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - KeepCollectors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/KeepCollectors.styles.css" asp-append-version="true" />
+</head>
+    @*<div class="modal fade" id="accountModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content login-modal">
+
+            <div class="modal-header border-0">
+                <h5 class="modal-title medieval-font text-black">Welcome Back</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" placeholder="you@email.com">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-login">Log In</button>
+                        <button type="button" class="btn btn-signup">
+                            Sign Up
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    
+</div>
+*@
+    <body class="@(Context.Request.Path.StartsWithSegments("/Identity") ? "identity-ui" : "")">
+        <header>
+            <nav class="navbar top-bar border-bottom">
+                <div class="container-fluid d-flex align-items-center">
+
+                    <a class="navbar-brand text-white fw-bold logo-text" asp-controller="Home" asp-action="Index">
+                        The Collectors Keep
+                        <img src="~/images/CastleLogoFinal.png" alt="Logo" height="40" class="me-2" />
+                    </a>
+
+                    <form class="mx-auto w-50">
+                        <input class="form-control" type="search" placeholder="Search products..." />
+                    </form>
+
+                    <div class="d-flex gap-3">
+                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
+                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                               asp-area="Identity" asp-page="/Account/Manage/Index">
+                                My Account
+                            </a>
+
+                            <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                                <button type="submit" class="btn text-white btn-outline-light top-bar-btn">
+                                    Logout
+                                </button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                               href="/Identity/Account/Login">
+                                Log in/Register
+                            </a>
+                        }
+
+                        @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
+                    </div>
+                </div>
+            </nav>
+
+            <nav class="navbar navbar-expand category-bar">
+                <div class="container-fluid justify-content-center">
+                    <ul class="navbar-nav gap-4">
+                        <li class="nav-item bottom-bar-btn">
+                            <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                Cards
+                            </a>
+                        </li>
+                        <li class="nav-item bottom-bar-btn">
+                            <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                Action Figures
+                            </a>
+                        </li>
+                        <li class="nav-item bottom-bar-btn">
+                            <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                Comics
+                            </a>
+                        </li>
+                        <li class="nav-item bottom-bar-btn">
+                            <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                Retro Games
+                            </a>
+                        </li>
+                        <li class="nav-item bottom-bar-btn">
+                            <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                                Vinyl
+                            </a>
+                        </li>
+                        <li class="nav-item bottom-bar-btn"><a class="nav-link text-white" href="#">Community Posts</a></li>
+                        <li class="nav-item bottom-bar-btn"><a class="nav-link text-white" href="#">Leaderboard</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!--
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TheCollectorsKeep</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        -->
+        <div class="container-fluid px-0">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2026 - TheCollectorsKeep - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+</html>
