@@ -21,6 +21,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
 })
+.AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<CollectorsKeepDbContext>();
 
 
@@ -53,6 +54,31 @@ using (var scope = app.Services.CreateScope())
 
     // If you use migrations, this will create/update the DB automatically:
     context.Database.Migrate();
+
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    // 1) Ensure Admin role exists
+    if (!await roleManager.RoleExistsAsync("Admin"))
+    {
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+    }
+
+    // 2) Assign Admin role to your user (email from config)
+    var adminEmail = builder.Configuration["AdminUser:Email"];
+
+    if (!string.IsNullOrWhiteSpace(adminEmail))
+    {
+        var user = await userManager.FindByEmailAsync(adminEmail);
+
+        if (user != null)
+        {
+            if (!await userManager.IsInRoleAsync(user, "Admin"))
+            {
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+        }
+    }
 
     if (!context.Products.Any())
     {
