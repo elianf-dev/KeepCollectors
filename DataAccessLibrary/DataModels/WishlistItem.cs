@@ -24,7 +24,7 @@ namespace DataAccessLayer.DataModels
         public int ProductID { get; set; }
 
         [ForeignKey(nameof(ProductID))]
-        public Product? Product { get; set; }   // ✅ this is what fixes: wi.Product
+        public Product? Product { get; set; }
 
         [Required]
         public DateTime DateAdded { get; set; } = DateTime.UtcNow;

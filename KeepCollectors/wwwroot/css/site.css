@@ -433,7 +433,7 @@ header form .form-control:focus {
 }
 
 .product-img-wrapper {
-    max-height: 500px;
+    max-height: 800px;
     overflow: hidden;
 }
 
@@ -441,4 +441,9 @@ header form .form-control:focus {
     width: 100%;
     height: auto;
     object-fit: contain;
+}
+
+.cart-container {
+    max-width: 1100px;
+    margin: auto;
 }

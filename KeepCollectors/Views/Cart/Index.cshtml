@@ -1,0 +1,58 @@
+﻿@model DataAccessLayer.DataModels.Cart
+
+<div class="container cart-container mt-5">
+
+    <h2 class="mb-4 text-center">Your Cart</h2>
+
+    @if (Model?.CartItems?.Any() == true)
+    {
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th style="width:150px;">Price</th>
+                    <th style="width:120px;">Quantity</th>
+                    <th style="width:120px;"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.CartItems)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+
+                        <td>$@item.Product.Price</td>
+
+                        <td>@item.Quantity</td>
+
+                        <td>
+                            <a asp-action="Remove"
+                               asp-route-id="@item.CartItemID"
+                               class="btn btn-danger btn-sm">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="text-center mt-5">
+
+            <p class="fs-5 text-muted">
+                Your cart is currently empty.
+            </p>
+
+            <a asp-controller="Products"
+               asp-action="Index"
+               class="btn btn-outline-primary mt-3">
+                Browse Products
+            </a>
+
+        </div>
+    }
+
+</div>

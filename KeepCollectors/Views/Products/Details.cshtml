@@ -10,14 +10,13 @@
 
         <!-- Image -->
         <div class="col-md-6">
-            <div class="product-card border box-shadow p-3">
-                <div class="product-img-wrapper">
-                    <img src="@(string.IsNullOrEmpty(Model.ImagePath)
-                                                          ? "/images/placeholder.png"
-                                                          : Model.ImagePath)"
-                         class="product-img"
-                         alt="@Model.Name" />
-                </div>
+            <div class="product-card border box-shadow p-3 text-center">
+                <img src="@(string.IsNullOrEmpty(Model.ImagePath)
+                                       ? "/images/placeholder.png"
+                                       : Model.ImagePath)"
+                     class="img-fluid"
+                     alt="@Model.Name"
+                     style="max-height:600px; object-fit:contain;" />
             </div>
         </div>
 
