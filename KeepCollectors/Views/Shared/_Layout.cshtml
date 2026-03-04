@@ -84,6 +84,11 @@
                             </a>
                         }
 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                            asp-controller="AdminProducts" asp-action="Index">Admin</a>
+                        }
                         @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
                     </div>
                 </div>
