@@ -4,6 +4,7 @@ using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepCollectors.Migrations
 {
     [DbContext(typeof(CollectorsKeepDbContext))]
-    partial class CollectorsKeepDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302214237_NewDatabaseInital")]
+    partial class NewDatabaseInital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,51 +132,6 @@ namespace KeepCollectors.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Cart", b =>
-                {
-                    b.Property<int>("CartID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartID"));
-
-                    b.Property<string>("CustomerID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CartID");
-
-                    b.HasIndex("CustomerID");
-
-                    b.ToTable("Carts");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.CartItem", b =>
-                {
-                    b.Property<int>("CartItemID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemID"));
-
-                    b.Property<int>("CartID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartItemID");
-
-                    b.HasIndex("CartID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("CartItems");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Inventory", b =>
@@ -501,36 +459,6 @@ namespace KeepCollectors.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.DataModels.Cart", b =>
-                {
-                    b.HasOne("DataAccessLayer.DataModels.ApplicationUser", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.CartItem", b =>
-                {
-                    b.HasOne("DataAccessLayer.DataModels.Cart", "Cart")
-                        .WithMany("CartItems")
-                        .HasForeignKey("CartID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.DataModels.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cart");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("DataAccessLayer.DataModels.Inventory", b =>
                 {
                     b.HasOne("DataAccessLayer.DataModels.Product", "Product")
@@ -660,11 +588,6 @@ namespace KeepCollectors.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Wishlists");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Cart", b =>
-                {
-                    b.Navigation("CartItems");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Order", b =>

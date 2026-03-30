@@ -84,6 +84,11 @@
                             </a>
                         }
 
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                            asp-controller="AdminProducts" asp-action="Index">Admin</a>
+                        }
                         @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
                     </div>
                 </div>
@@ -171,5 +176,7 @@
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
         @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://unpkg.com/embla-carousel/embla-carousel.umd.js"></script>
     </body>
 </html>

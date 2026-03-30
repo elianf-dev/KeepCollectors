@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Views\AdminProducts\Index.cshtml~RF5b3ed07.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.23" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.12">
@@ -22,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="wwwroot\images\carousel\" />
   </ItemGroup>
 
 </Project>

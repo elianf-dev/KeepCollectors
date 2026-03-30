@@ -28,12 +28,23 @@
                             $@product.Price.ToString("F2")
                         </p>
 
-                        <a asp-controller="Products"
-                           asp-action="Details"
-                           asp-route-id="@product.ProductID"
-                           class="btn btn-primary btn-sm">
-                            View Item
-                        </a>
+                        <div class="d-flex justify-content-center gap-2">
+
+                            <a asp-controller="Products"
+                               asp-action="Details"
+                               asp-route-id="@product.ProductID"
+                               class="btn btn-primary btn-sm">
+                                View Item
+                            </a>
+
+                            <a asp-controller="Cart"
+                               asp-action="AddToCart"
+                               asp-route-productId="@product.ProductID"
+                               class="btn btn-outline-primary btn-sm">
+                                Add to Cart
+                            </a>
+
+                        </div>
                     </div>
 
                 </div>
