@@ -38,9 +38,12 @@
                 @Model.Inventory?.Quantity
             </p>
 
-            <button class="btn btn-primary">
+            <a asp-controller="Cart"
+                   asp-action="AddToCart"
+                   asp-route-productId="@Model.ProductID"
+                   class="btn btn-primary">
                 Add to Cart
-            </button>
+            </a>
 
         </div>
 
