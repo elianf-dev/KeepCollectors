@@ -22,6 +22,14 @@
             </div>
 
            
+                <img src="~/images/carousel/product4.jpg">
+            </div>
+                <img src="~/images/carousel/product4.jpg">
+            </div>
+                <img src="~/images/carousel/product4.jpg">
+            </div>
+                <img src="~/images/carousel/product4.jpg">
+            </div>
 
         </div>
     </div>
@@ -75,6 +83,12 @@
                                asp-route-id="@p.ProductID"
                                class="btn btn-dark">
                                 View Details
+                            </a>
+                            <a asp-controller="Cart"
+                               asp-action="AddToCart"
+                               asp-route-productId="@p.ProductID"
+                               class="btn btn-outline-dark">
+                                 Add to Cart
                             </a>
                         </div>
 

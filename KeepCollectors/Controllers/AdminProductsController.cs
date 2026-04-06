@@ -9,9 +9,6 @@ using Microsoft.EntityFrameworkCore;
 namespace KeepCollectors.Controllers
 {
     [Authorize(Roles = "Admin")]
-
-
-
     public class AdminProductsController : Controller
     {
 
