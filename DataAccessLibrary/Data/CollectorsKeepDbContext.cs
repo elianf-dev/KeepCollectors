@@ -25,6 +25,8 @@ namespace DataAccessLayer.Data
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<UserKeepItem> UserKeepItems { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -91,6 +93,24 @@ namespace DataAccessLayer.Data
                    .WithMany(p => p.OrderItems)
                    .HasForeignKey(oi => oi.ProductID)
                    .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserKeepItem>()
+    .HasOne(k => k.User)
+    .WithMany()
+    .HasForeignKey(k => k.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<UserKeepItem>()
+                .HasOne(k => k.Product)
+                .WithMany()
+                .HasForeignKey(k => k.ProductID)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<UserKeepItem>()
+                .Property(k => k.ItemValue)
+                .HasPrecision(18, 2);
+
+
         }
     }
 }

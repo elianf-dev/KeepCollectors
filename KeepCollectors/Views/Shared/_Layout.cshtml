@@ -133,7 +133,13 @@
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn"><a class="nav-link text-white" href="#">Community Posts</a></li>
-                        <li class="nav-item bottom-bar-btn"><a class="nav-link text-white" href="#">Leaderboard</a></li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                            asp-controller="Leaderboard"
+                            asp-action = "Index">
+                            Leaderboard
+                        </a>
+                        </li>
                     </ul>
                 </div>
             </nav>

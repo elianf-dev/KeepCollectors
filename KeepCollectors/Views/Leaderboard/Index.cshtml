@@ -1,0 +1,29 @@
+﻿@model List<KeepCollectors.Models.LeaderboardViewModel>
+
+@{
+    ViewData["Title"] = "Leaderboard";
+}
+
+<h2 class="mb-4">Leaderboard</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>User</th>
+            <th>Total Items</th>
+            <th>Total Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>#@entry.Rank</td>
+                <td>@entry.UserName</td>
+                <td>@entry.totalItems</td>
+                <td>@entry.TotalValue.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
