@@ -1,0 +1,131 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using DataAccessLayer.DataModels
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - The Collectors Keep</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" />
+</head>
+<body class="identity-themed">
+
+    <header>
+        <nav class="navbar top-bar border-bottom">
+            <div class="container-fluid d-flex align-items-center">
+
+                <a class="navbar-brand text-white fw-bold logo-text" asp-controller="Home" asp-action="Index">
+                    The Collectors Keep
+                    <img src="~/images/CastleLogoFinal.png" alt="Logo" height="40" class="me-2" />
+                </a>
+
+                <form class="mx-auto w-50">
+                    <input class="form-control" type="search" placeholder="Search products..." />
+                </form>
+
+                <div class="d-flex gap-3">
+                    <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
+                    <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
+                    @if (User.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a class="btn text-white btn-outline-light top-bar-btn"
+                               asp-area="Identity" asp-page="/Account/Manage/Index">
+                            My Account
+                        </a>
+
+                        <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                            <button type="submit" class="btn text-white btn-outline-light top-bar-btn">
+                                Logout
+                            </button>
+                        </form>
+                        <a class="btn text-white btn-outline-light top-bar-btn"
+                               asp-controller="Orders"
+                               asp-action="History">
+                            View Order History
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn text-white btn-outline-light top-bar-btn"
+                               href="/Identity/Account/Login">
+                            Log in/Register
+                        </a>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn text-white btn-outline-light top-bar-btn"
+                           asp-controller="AdminProducts" asp-action="Index">Admin</a>
+                    }
+                    @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
+                </div>
+            </div>
+        </nav>
+
+        <nav class="navbar navbar-expand category-bar">
+            <div class="container-fluid justify-content-center">
+                <ul class="navbar-nav gap-4">
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                            Cards
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                            Action Figures
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                            Comics
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                            Retro Games
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Products"
+                               asp-action="Index">
+                            Vinyl
+                        </a>
+                    </li>
+                    <li class="nav-item bottom-bar-btn"><a class="nav-link text-white" href="#">Community Posts</a></li>
+                    <li class="nav-item bottom-bar-btn">
+                        <a class="nav-link text-white"
+                               asp-controller="Leaderboard"
+                               asp-action="Index">
+                            Leaderboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="identity-shell">
+        <div class="identity-panel">
+            @RenderBody()
+        </div>
+    </main>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

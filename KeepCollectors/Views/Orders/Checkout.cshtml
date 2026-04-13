@@ -1,0 +1,70 @@
+﻿@model DataAccessLayer.DataModels.Cart
+
+@{
+    decimal subtotal = 0;
+
+    if (Model != null && Model.CartItems != null)
+    {
+        subtotal = Model.CartItems.Sum(item => item.Product.Price * item.Quantity);
+    }
+
+    decimal tax = Math.Round(subtotal * 0.08m, 2);
+    decimal total = subtotal + tax;
+}
+
+<h2>Secure Checkout</h2>
+
+@if (Model == null || Model.CartItems == null || !Model.CartItems.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <div style="display:flex; gap:30px;">
+
+        <!-- LEFT SIDE -->
+        <div style="flex:2;">
+            @foreach (var item in Model.CartItems)
+            {
+                var lineTotal = item.Product.Price * item.Quantity;
+
+                <div style="display:flex; align-items:center; border:1px solid #ccc; padding:15px; margin-bottom:10px; gap:20px;">
+
+                    <!-- IMAGE -->
+                    <img src="@item.Product.ImagePath"
+                         alt="@item.Product.Name"
+                         style="width:80px; height:80px; object-fit:cover; border-radius:8px;" />
+
+                    <!-- DETAILS -->
+                    <div style="flex:1;">
+                        <h4>@item.Product.Name</h4>
+                        <p>Price: $@item.Product.Price</p>
+                        <p>Quantity: @item.Quantity</p>
+                    </div>
+
+                    <!-- TOTAL -->
+                    <div>
+                        <strong>$@lineTotal</strong>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div style="flex:1; border:1px solid #ccc; padding:20px;">
+            <h3>Order Summary</h3>
+
+            <p>Subtotal: $@subtotal</p>
+            <p>Tax: $@tax</p>
+            <h4>Total: $@total</h4>
+
+            <form asp-action="PlaceOrder" method="post">
+                <button type="submit" style="width:100%; padding:10px;">
+                    Pay $@total
+                </button>
+            </form>
+        </div>
+
+    </div>
+}

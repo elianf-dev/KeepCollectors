@@ -1,0 +1,154 @@
+﻿.secure-checkout-page {
+    background: #5b87d9;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.checkout-wrapper {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: #eef0f7;
+    border-radius: 18px;
+    padding: 30px;
+}
+
+.checkout-heading {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    color: #111;
+}
+
+.checkout-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.checkout-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.address-card {
+    margin-bottom: 24px;
+}
+
+.address-header h4,
+.summary-card h4,
+.cart-section-header h4 {
+    margin: 0 0 14px 0;
+    font-size: 1.1rem;
+    color: #111;
+}
+
+.address-body {
+    line-height: 1.7;
+    color: #444;
+}
+
+.cart-section-header span {
+    color: #888;
+    font-weight: 400;
+    font-size: 0.95rem;
+}
+
+.cart-item-card {
+    display: grid;
+    grid-template-columns: 90px 1.8fr 100px 100px;
+    gap: 18px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.cart-item-image img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cart-item-name {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #111;
+}
+
+.cart-item-desc {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.cart-item-price {
+    font-weight: 600;
+    color: #222;
+}
+
+.cart-item-qty label,
+.cart-item-total label {
+    display: block;
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 6px;
+}
+
+.cart-item-qty div,
+.cart-item-total div {
+    font-weight: 700;
+    color: #111;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    color: #333;
+}
+
+.total-row {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid #e1e1e1;
+    font-weight: 700;
+    color: #1f8f54;
+}
+
+.payment-title {
+    margin-top: 28px;
+}
+
+.fake-payment-form input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.payment-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.pay-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: #4f7fe8;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+    .pay-btn:hover {
+        opacity: 0.92;
+    }

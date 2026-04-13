@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KeepCollectors.styles.css" asp-append-version="true" />
+    @RenderSection("Styles", required: false)
+
 </head>
+
     @*<div class="modal fade" id="accountModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content login-modal">
@@ -75,6 +78,12 @@
                                     Logout
                                 </button>
                             </form>
+                                <a class="btn text-white btn-outline-light top-bar-btn"
+                                 asp-controller="Orders"
+                                asp-action="History">
+                            View Order History
+                            </a>
+
                         }
                         else
                         {
@@ -89,6 +98,7 @@
                             <a class="btn text-white btn-outline-light top-bar-btn"
                             asp-controller="AdminProducts" asp-action="Index">Admin</a>
                         }
+
                         @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
                     </div>
                 </div>

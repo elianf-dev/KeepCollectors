@@ -79,12 +79,15 @@
                                class="btn btn-dark">
                                 View Details
                             </a>
-                            <a asp-controller="Cart"
-                               asp-action="AddToCart"
-                               asp-route-productId="@p.ProductID"
-                               class="btn btn-outline-dark">
-                                 Add to Cart
-                            </a>
+                                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="productId" value="@p.ProductID" />
+                                            <input type="hidden" name="quantity" value="1" />
+
+                                            <button type="submit" class="btn btn-outline-dark w-100">
+                                                Add to Cart
+                                            </button>
+                                        </form>
                         </div>
 
                     </div>
