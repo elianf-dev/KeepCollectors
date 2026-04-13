@@ -498,4 +498,33 @@ header form .form-control:focus {
     margin: auto;
 }
 
+/* Register Page */
+
+.register-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.register-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.form-control {
+    border-radius: 6px;
+}
+
+/* Login Page */
+
+.login-container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.login-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
 

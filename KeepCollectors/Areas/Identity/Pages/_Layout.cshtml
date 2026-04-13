@@ -18,52 +18,61 @@
 
     <header>
         <nav class="navbar top-bar border-bottom">
-            <div class="container-fluid d-flex align-items-center">
+            <div class="container-fluid">
+                <div class="row w-100 align-items-center">
 
-                <a class="navbar-brand text-white fw-bold logo-text" asp-controller="Home" asp-action="Index">
-                    The Collectors Keep
-                    <img src="~/images/CastleLogoFinal.png" alt="Logo" height="40" class="me-2" />
-                </a>
-
-                <form class="mx-auto w-50">
-                    <input class="form-control" type="search" placeholder="Search products..." />
-                </form>
-
-                <div class="d-flex gap-3">
-                    <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
-                    <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
-                    @if (User.Identity?.IsAuthenticated ?? false)
-                    {
-                        <a class="btn text-white btn-outline-light top-bar-btn"
-                               asp-area="Identity" asp-page="/Account/Manage/Index">
-                            My Account
+                    <div class="col-4 d-flex align-items-center">
+                        <a class="navbar-brand text-white fw-bold logo-text m-0" asp-controller="Home" asp-action="Index">
+                            The Collectors Keep
+                            <img src="~/images/CastleLogoFinal.png" alt="Logo" height="40" class="ms-2" />
                         </a>
+                    </div>
 
-                        <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
-                            <button type="submit" class="btn text-white btn-outline-light top-bar-btn">
-                                Logout
-                            </button>
+                    <div class="col-4 text-center">
+                        <form>
+                            <input class="form-control w-75 mx-auto" type="search" placeholder="Search products..." />
                         </form>
-                        <a class="btn text-white btn-outline-light top-bar-btn"
+                    </div>
+
+                    <div class="col-4 d-flex justify-content-end gap-3">
+                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
+                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
+                        @if (User.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                               asp-area="Identity" asp-page="/Account/Manage/Index">
+                                My Account
+                            </a>
+
+                            <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
+                                <button type="submit" class="btn text-white btn-outline-light top-bar-btn">
+                                    Logout
+                                </button>
+                            </form>
+                            <a class="btn text-white btn-outline-light top-bar-btn"
                                asp-controller="Orders"
                                asp-action="History">
-                            View Order History
-                        </a>
-                    }
-                    else
-                    {
-                        <a class="btn text-white btn-outline-light top-bar-btn"
-                               href="/Identity/Account/Login">
-                            Log in/Register
-                        </a>
-                    }
+                                Orders
+                            </a>
 
-                    @if (User.IsInRole("Admin"))
-                    {
-                        <a class="btn text-white btn-outline-light top-bar-btn"
-                           asp-controller="AdminProducts" asp-action="Index">Admin</a>
-                    }
-                    @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
+                        }
+                        else
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                               href="/Identity/Account/Login">
+                                Log in/Register
+                            </a>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a class="btn text-white btn-outline-light top-bar-btn"
+                               asp-controller="AdminProducts" asp-action="Index">Admin</a>
+                        }
+
+                        @*@ <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Account" data-bs-toggle="modal" data-bs-target="#accountModal" asp-action="Index">Account</a>*@
+
+                    </div>
                 </div>
             </div>
         </nav>
