@@ -21,7 +21,7 @@
                 <img src="~/images/carousel/product3.jpg">
             </div>
 
-           
+            <div class="embla__slide">
                 <img src="~/images/carousel/product4.jpg">
             </div>
 
@@ -76,7 +76,7 @@
                             <a asp-controller="Products"
                                asp-action="Details"
                                asp-route-id="@p.ProductID"
-                               class="btn btn-dark">
+                               class="btn btn-primary btn-sm">
                                 View Details
                             </a>
                                         <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
@@ -84,7 +84,7 @@
                                             <input type="hidden" name="productId" value="@p.ProductID" />
                                             <input type="hidden" name="quantity" value="1" />
 
-                                            <button type="submit" class="btn btn-outline-dark w-100">
+                                            <button type="submit" class="btn btn-primary-two w-100">
                                                 Add to Cart
                                             </button>
                                         </form>
