@@ -15,6 +15,9 @@
 </head>
     <body class="@(Context.Request.Path.StartsWithSegments("/Identity") ? "identity-ui" : "")">
         <header>
+        @{
+            var currentCategory = Context.Request.Query["category"].ToString();
+        }
             <nav class="navbar top-bar border-bottom">
                 <div class="container-fluid">
                     <div class="row w-100 align-items-center">
@@ -79,37 +82,42 @@
                 <div class="container-fluid justify-content-center">
                     <ul class="navbar-nav gap-4">
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentCategory == "Cards" ? "active-category" : "")"
                                asp-controller="Products"
-                               asp-action="Index">
+                               asp-action="Index"
+                               asp-route-category="Cards">
                                 Cards
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentCategory == "ActionFigures" ? "active-category" : "")"
                                asp-controller="Products"
-                               asp-action="Index">
+                               asp-action="Index"
+                               asp-route-category="ActionFigures">
                                 Action Figures
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentCategory == "Comics" ? "active-category" : "")"
                                asp-controller="Products"
-                               asp-action="Index">
+                               asp-action="Index"
+                               asp-route-category="Comics">
                                 Comics
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentCategory == "RetroGames" ? "active-category" : "")"
                                asp-controller="Products"
-                               asp-action="Index">
+                               asp-action="Index"
+                               asp-route-category="RetroGames">
                                 Retro Games
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentCategory == "Vinyl" ? "active-category" : "")"
                                asp-controller="Products"
-                               asp-action="Index">
+                               asp-action="Index"
+                               asp-route-category="Vinyl">
                                 Vinyl
                             </a>
                         </li>

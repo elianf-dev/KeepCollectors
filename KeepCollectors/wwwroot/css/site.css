@@ -528,3 +528,11 @@ header form .form-control:focus {
     box-shadow: 0 5px 25px rgba(0,0,0,0.1);
 }
 
+/* ETC */
+
+.active-category {
+    text-decoration: none;
+    border-color: #d9b56d;
+    background-color: #d9b56d;
+}
+

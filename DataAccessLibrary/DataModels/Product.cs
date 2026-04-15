@@ -37,5 +37,16 @@ namespace DataAccessLayer.DataModels
 
         public ICollection<OrderItem> OrderItems { get; set; }
             = new List<OrderItem>();
+
+        public enum ProductCategory
+        {
+            Cards,
+            ActionFigures,
+            Comics,
+            RetroGames,
+            Vinyl
+        }
+
+        public ProductCategory Category { get; set; }
     }
 }

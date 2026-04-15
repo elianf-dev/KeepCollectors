@@ -2,10 +2,16 @@
 
 @{
     ViewData["Title"] = "Products";
+
+    var category = Context.Request.Query["category"];
 }
 
 <div class="container mt-4">
-    <h2 class="text-center mb-4">Browse Products</h2>
+    <h2 class="text-center mt-4">
+        @(string.IsNullOrEmpty(category) || category == "All"
+                ? "All Products"
+                : "Browse " + category)
+    </h2>
 
     <div class="row">
         @foreach (var product in Model)
@@ -27,6 +33,8 @@
                         <p class="product-price fw-bold mb-2">
                             $@product.Price.ToString("F2")
                         </p>
+
+                        <p class="text-muted mb-2">In Stock: @product.QuantityAvailable</p>
 
                         <div class="d-flex justify-content-center gap-2">
 
