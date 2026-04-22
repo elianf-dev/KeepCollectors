@@ -7,57 +7,60 @@
 }
 
 <div class="container mt-4">
+
     <h2 class="text-center mt-4">
         @(string.IsNullOrEmpty(category) || category == "All"
                 ? "All Products"
                 : "Browse " + category)
     </h2>
 
-    <div class="row">
-        @foreach (var product in Model)
+    <!-- Product Grid -->
+    <div class="row g-4">
+        @foreach (var p in Model)
         {
-            <div class="col-md-4 mb-4">
-                <div class="product-card border box-shadow h-100">
+            <div class="col-12 col-sm-6 col-lg-4">
+                <div class="card h-100 shadow-sm">
 
-                    <div class="product-img-wrapper">
-                        <img src="@(string.IsNullOrEmpty(product.ImagePath)
-                                                                ? "/images/placeholder.png"
-                                                                : product.ImagePath)"
-                         class="product-img"
-                         alt="@product.Name" />
-                </div>
+                    <img src="@(string.IsNullOrWhiteSpace(p.ImagePath)
+                                                                                                   ? "https://via.placeholder.com/600x400?text=No+Image"
+                                                                                                   : p.ImagePath)"
+                                                                                                                 class="card-img-top"
+                                                                                                                 style="height: 220px; object-fit: cover;"
+                                                                                                                 alt="@p.Name" />
 
-                    <div class="p-3 text-center">
-                        <h5 class="mb-2">@product.Name</h5>
+                    <div class="card-body d-flex flex-column">
 
-                        <p class="product-price fw-bold mb-2">
-                            $@product.Price.ToString("F2")
-                        </p>
+                        <h5 class="card-title fw-semibold">@p.Name</h5>
 
-                        <p class="text-muted mb-2">In Stock: @product.QuantityAvailable</p>
+                        <p class="card-text text-muted">
+                            @(string.IsNullOrWhiteSpace(p.Description)
+                                                    ? "No description available."
+                                                    : (p.Description.Length > 90
+                                                    ? p.Description.Substring(0, 90) + "..."
+                                                    : p.Description))
+                    </p>
+                    <p class="text-muted mb-2">In Stock: @p.QuantityAvailable</p>
 
-                        <div class="d-flex justify-content-center gap-2">
 
+                        <div class="mt-auto d-grid">
                             <a asp-controller="Products"
                                asp-action="Details"
-                               asp-route-id="@product.ProductID"
+                               asp-route-id="@p.ProductID"
                                class="btn btn-primary btn-sm">
                                 View Item
                             </a>
-
-                            <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
                                 @Html.AntiForgeryToken()
-                                <input type="hidden" name="productId" value="@product.ProductID" />
+                                <input type="hidden" name="productId" value="@p.ProductID" />
                                 <input type="hidden" name="quantity" value="1" />
 
-                                <button type="submit" class="btn btn-primary-two btn-sm">
+                                <button type="submit" class="btn btn-primary-two w-100">
                                     Add to Cart
                                 </button>
                             </form>
-
                         </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
                 }
