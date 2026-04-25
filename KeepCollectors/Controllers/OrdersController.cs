@@ -70,8 +70,10 @@ public class OrdersController : Controller
             order.OrderItems.Add(new OrderItem
             {
                 ProductID = product.ProductID,
-                Quantity = item.Quantity
+                Quantity = item.Quantity,
+                UnitPrice = product.Price
             });
+
         }
 
         _context.Orders.Add(order);

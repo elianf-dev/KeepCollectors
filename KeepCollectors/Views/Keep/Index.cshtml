@@ -1,0 +1,104 @@
+﻿@model KeepCollectors.Models.KeepViewModel
+
+@{
+    ViewData["Title"] = "My Keep";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">My Keep</h2>
+    <div class="row text-center mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="border rounded p-3">
+                <h5>Collection Worth</h5>
+                <p class="fs-4 fw-bold">$@Model.CollectionWorth.ToString("F2")</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="border rounded p-3">
+                <h5>Saved Items Worth</h5>
+                <p class="fs-4 fw-bold">$@Model.SavedItemsWorth.ToString("F2")</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="border rounded p-3">
+                <h5>Total Keep Worth</h5>
+                <p class="fs-4 fw-bold">$@Model.TotalKeepWorth.ToString("F2")</p>
+            </div>
+        </div>
+    </div>
+
+
+    <h3 class="mb-3">My Collection</h3>
+
+    @if (Model.PurchasedItems.Any())
+    {
+        <div class="row g-4 mb-5">
+            @foreach (var item in Model.PurchasedItems)
+            {
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card border h-100">
+                        <div class="product-img-wrapper">
+                            <img src="@(string.IsNullOrWhiteSpace(item.Product?.ImagePath) ? "/images/placeholder.png" : item.Product.ImagePath)"
+                                 class="product-img"
+                                 alt="@item.Product?.Name" />
+                        </div>
+
+                        <div class="p-3 text-center">
+                            <h5>@item.Product?.Name</h5>
+                            <p class="mb-1">Owned: @item.Quantity</p>
+                            <p class="text-muted small">Purchased @item.Order?.DateOrdered.ToShortDateString()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted mb-5">You have not bought any collectibles yet.</p>
+    }
+
+    <h3 class="mb-3">Saved Items</h3>
+
+    @if (Model.SavedItems.Any())
+    {
+        <div class="row g-4">
+            @foreach (var item in Model.SavedItems)
+            {
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="product-card border h-100">
+                        <div class="product-img-wrapper">
+                            <img src="@(string.IsNullOrWhiteSpace(item.Product?.ImagePath) ? "/images/placeholder.png" : item.Product.ImagePath)"
+                                 class="product-img"
+                                 alt="@item.Product?.Name" />
+                        </div>
+
+                        <div class="p-3 text-center">
+                            <h5>@item.Product?.Name</h5>
+                            <p class="fw-bold">$@item.Product?.Price.ToString("F2")</p>
+
+                            <a asp-controller="Products"
+                                   asp-action="Details"
+                                   asp-route-id="@item.ProductID"
+                                   class="btn btn-primary btn-sm">
+                                View Item
+                            </a>
+
+                            <a asp-action="RemoveSaved"
+                                   asp-route-id="@item.WishlistItemID"
+                                   class="btn btn-outline-danger btn-sm">
+                                Remove
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">No saved items yet.</p>
+    }
+</div>

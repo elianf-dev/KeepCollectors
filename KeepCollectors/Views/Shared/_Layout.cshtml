@@ -22,21 +22,21 @@
                 <div class="container-fluid">
                     <div class="row w-100 align-items-center">
 
-                        <div class="col-4 d-flex align-items-center">
-                            <a class="navbar-brand text-white fw-bold logo-text m-0" asp-controller="Home" asp-action="Index">
+                    <div class="col-12 col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-start mb-2 mb-lg-0">
+                        <a class="navbar-brand text-white fw-bold logo-text m-0" asp-controller="Home" asp-action="Index">
                                 The Collectors Keep
                                 <img src="~/images/CastleLogoFinal.png" alt="Logo" height="40" class="ms-2" />
                             </a>
                         </div>
 
-                        <div class="col-4 text-center">
-                            <form>
-                                <input class="form-control w-75 mx-auto" type="search" placeholder="Search products..." />
-                            </form>
+                    <div class="col-12 col-lg-4 text-center mb-2 mb-lg-0">
+                        <form>
+                            <input class="form-control nav-search mx-auto" type="search" placeholder="Search products..." />
+                        </form>
                         </div>
 
-                        <div class="col-4 d-flex justify-content-end gap-3">
-                            <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
+                    <div class="col-12 col-lg-4 d-flex justify-content-center justify-content-lg-end gap-2 flex-wrap">
+                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
                             <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
                             @if (User.Identity?.IsAuthenticated ?? false)
                             {

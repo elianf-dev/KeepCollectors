@@ -6,6 +6,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const emblaNode = document.querySelector('.embla__viewport')
+    if(!emblaNode) return;
     const embla = EmblaCarousel(emblaNode, {
         align: 'center',
         containScroll: 'trimSnaps',
@@ -19,6 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
     nextBtn.addEventListener("click", embla.scrollNext)
 
     const dotsContainer = document.querySelector(".embla__dots")
+
+    if (!prevBtn || !nextBtn || !dotsContainer) return;
 
     const slides = embla.slideNodes()
 

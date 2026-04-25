@@ -3,61 +3,86 @@
     ViewData["Title"] = "Edit Product";
 }
 
-<h2 class="mb-3">Edit Product</h2>
-
-@if (!string.IsNullOrWhiteSpace(Model.ExistingImagePath))
-{
-    <div class="mb-3">
-        <div class="text-muted">Current Image:</div>
-        <img src="@Model.ExistingImagePath" style="height:120px; object-fit:cover;" />
-    </div>
-}
-
-<form asp-action="Edit" asp-route-id="@Model.ProductID" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="ProductID" />
-
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <label asp-for="Price" class="form-label"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
+<div class="admin-page">
+    <div class="admin-hero">
+        <div>
+            <p class="admin-eyebrow">Product Editor</p>
+            <h2>Edit Product</h2>
+            <p class="admin-subtitle">Update listing information, stock count, price, or product artwork.</p>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <label asp-for="QuantityAvailable" class="form-label"></label>
-            <input asp-for="QuantityAvailable" class="form-control" />
-            <span asp-validation-for="QuantityAvailable" class="text-danger"></span>
+        <a class="btn btn-secondary" asp-action="Index">Back to Admin</a>
+    </div>
+
+    <form asp-action="Edit" asp-route-id="@Model.ProductID" method="post" enctype="multipart/form-data" class="admin-form-panel">
+        <input type="hidden" asp-for="ProductID" />
+
+        <div class="admin-editor-grid">
+            <div>
+                <div class="admin-form-section">
+                    <h3>Product Details</h3>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="admin-form-section">
+                    <h3>Pricing & Stock</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Price" class="form-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="QuantityAvailable" class="form-label"></label>
+                            <input asp-for="QuantityAvailable" class="form-control" />
+                            <span asp-validation-for="QuantityAvailable" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="admin-image-panel">
+                <h3>Product Image</h3>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ExistingImagePath))
+                {
+                    <img src="@Model.ExistingImagePath" alt="Current product image" />
+                }
+                else
+                {
+                    <div class="admin-image-placeholder">No image</div>
+                }
+
+                <div class="mb-3">
+                    <label asp-for="ImageUrl" class="form-label"></label>
+                    <input asp-for="ImageUrl" class="form-control" placeholder="Paste a new URL to replace the image" />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ImageFile" class="form-label"></label>
+                    <input asp-for="ImageFile" class="form-control" type="file" />
+                    <div class="text-muted small">Upload a file to replace the image.</div>
+                </div>
+            </aside>
         </div>
-    </div>
 
-    <hr />
-
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" placeholder="Paste a new URL to replace the image (optional)" />
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="ImageFile" class="form-label"></label>
-        <input asp-for="ImageFile" class="form-control" type="file" />
-        <div class="text-muted small">Upload a file to replace the image (optional).</div>
-    </div>
-
-    <button class="btn btn-primary" type="submit">Save</button>
-    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
-</form>
+        <div class="admin-form-actions">
+            <button class="btn btn-primary" type="submit">Save Changes</button>
+            <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

@@ -58,7 +58,15 @@
                 <button type="submit" class="btn btn-primary">
                     Add to Cart
                 </button>
+
+                <a asp-controller="Keep"
+                       asp-action="Add"
+                       asp-route-productId="@Model.ProductID"
+                       class="btn btn-outline-secondary">
+                    Save to My Keep
+                </a>
             </form>
+
 
         </div>
 
