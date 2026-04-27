@@ -17,6 +17,8 @@
         <header>
         @{
             var currentCategory = Context.Request.Query["category"].ToString();
+            var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+            var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
         }
             <nav class="navbar top-bar border-bottom">
                 <div class="container-fluid">
@@ -37,12 +39,16 @@
 
                     <div class="col-12 col-lg-4 d-flex justify-content-center justify-content-lg-end gap-2 flex-wrap">
                         <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
-                            <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
                             @if (User.Identity?.IsAuthenticated ?? false)
                             {
+                                <a class="btn text-white btn-outline-light top-bar-btn" 
+                                    asp-controller="Keep" asp-action="Index">
+                                        My Keep
+                                </a>
+
                                 <a class="btn text-white btn-outline-light top-bar-btn"
-                                   asp-area="Identity" asp-page="/Account/Manage/Index">
-                                    My Account
+                                    asp-area="Identity" asp-page="/Account/Manage/Index">
+                                        My Account
                                 </a>
 
                                 <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
@@ -122,14 +128,14 @@
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentController == "Community" ? "active-category" : "")"
                                asp-controller="Community"
                                asp-action="Index">
                                 Community Posts
                             </a>
                         </li>
                         <li class="nav-item bottom-bar-btn">
-                        <a class="nav-link text-decoration-none text-white"
+                        <a class="nav-link text-decoration-none text-white @(currentController == "Leaderboard" ? "active-category" : "")"
                                asp-controller="Leaderboard"
                                asp-action = "Index">
                                 Leaderboard

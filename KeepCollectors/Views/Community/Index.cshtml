@@ -1,4 +1,5 @@
 ﻿@model List<DataAccessLayer.DataModels.Post>
+@using System.Security.Claims
 
 <div class="container community-container mt-5">
 
@@ -26,13 +27,36 @@
         </form>
     </div>
 
+    @{
+        var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    }
+
     <!-- Feed -->
     @foreach (var post in Model)
     {
         <div class="card mb-4 p-3">
 
-            <strong>@post.User.UserName</strong>
-            <small class="text-muted">@post.CreatedAt</small>
+            <div class="d-flex justify-content-between align-items-start">
+                
+                <div>
+                    <strong>@post.User.UserName</strong><br />
+                    <small class="text-muted">@post.CreatedAt</small>
+                </div>
+                
+                @if (post.UserId == currentUserId)
+                {
+                    <form asp-action="DeletePost" method="post" class="m-0">
+                        <input type="hidden" name="postId" value="@post.PostId" />
+
+                        <button type="submit"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this post?');">
+                            Delete
+                        </button>
+                    </form>
+                }
+
+            </div>
 
             <p class="mt-2">@post.Content</p>
 

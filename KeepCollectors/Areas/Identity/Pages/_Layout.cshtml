@@ -36,12 +36,17 @@
 
                     <div class="col-4 d-flex justify-content-end gap-3">
                         <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Cart" asp-action="Index">Cart</a>
-                        <a class="btn text-white btn-outline-light top-bar-btn" asp-controller="Keep" asp-action="Index">My Keep</a>
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
+                            <a class="btn text-white btn-outline-light top-bar-btn" 
+                                asp-controller="Keep" 
+                                asp-action="Index">
+                                    My Keep
+                            </a>
+
                             <a class="btn text-white btn-outline-light top-bar-btn"
-                               asp-area="Identity" asp-page="/Account/Manage/Index">
-                                My Account
+                                asp-area="Identity" asp-page="/Account/Manage/Index">
+                                    My Account
                             </a>
 
                             <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" method="post">
@@ -49,10 +54,11 @@
                                     Logout
                                 </button>
                             </form>
+
                             <a class="btn text-white btn-outline-light top-bar-btn"
-                               asp-controller="Orders"
-                               asp-action="History">
-                                Orders
+                                asp-controller="Orders"
+                                asp-action="History">
+                                    Orders
                             </a>
 
                         }

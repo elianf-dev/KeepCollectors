@@ -100,5 +100,24 @@ namespace KeepCollectors.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(int postId)
+        {
+            var post = await _context.Posts.FindAsync(postId);
+
+            if (post == null)
+                return NotFound();
+
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+            
+            if (post.UserId != userId)
+                return Forbid();
+
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
     }
 }
