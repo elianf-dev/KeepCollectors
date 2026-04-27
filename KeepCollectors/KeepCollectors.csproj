@@ -33,6 +33,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="wwwroot\images\carousel\" />
+    <Folder Include="wwwroot\images\Posts\" />
   </ItemGroup>
 
 </Project>

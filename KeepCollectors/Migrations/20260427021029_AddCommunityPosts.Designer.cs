@@ -4,6 +4,7 @@ using DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KeepCollectors.Migrations
 {
     [DbContext(typeof(CollectorsKeepDbContext))]
-    partial class CollectorsKeepDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260427021029_AddCommunityPosts")]
+    partial class AddCommunityPosts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,37 +179,6 @@ namespace KeepCollectors.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.DataModels.Comment", b =>
-                {
-                    b.Property<int>("CommentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("CommentId");
-
-                    b.HasIndex("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Comments");
-                });
-
             modelBuilder.Entity("DataAccessLayer.DataModels.Inventory", b =>
                 {
                     b.Property<int>("ProductID")
@@ -221,31 +193,6 @@ namespace KeepCollectors.Migrations
                         {
                             t.HasCheckConstraint("CK_Inventory_Quantity", "Quantity >= 0");
                         });
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Like", b =>
-                {
-                    b.Property<int>("LikeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"));
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LikeId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PostId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Order", b =>
@@ -323,34 +270,6 @@ namespace KeepCollectors.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("OrderItems");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Post", b =>
-                {
-                    b.Property<int>("PostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostId"));
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImagePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PostId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Posts");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Product", b =>
@@ -649,25 +568,6 @@ namespace KeepCollectors.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DataAccessLayer.DataModels.Comment", b =>
-                {
-                    b.HasOne("DataAccessLayer.DataModels.Post", "Post")
-                        .WithMany("Comments")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.DataModels.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("DataAccessLayer.DataModels.Inventory", b =>
                 {
                     b.HasOne("DataAccessLayer.DataModels.Product", "Product")
@@ -677,25 +577,6 @@ namespace KeepCollectors.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Like", b =>
-                {
-                    b.HasOne("DataAccessLayer.DataModels.Post", "Post")
-                        .WithMany("Likes")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DataAccessLayer.DataModels.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Order", b =>
@@ -726,17 +607,6 @@ namespace KeepCollectors.Migrations
                     b.Navigation("Order");
 
                     b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Post", b =>
-                {
-                    b.HasOne("DataAccessLayer.DataModels.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.UserKeepItem", b =>
@@ -856,13 +726,6 @@ namespace KeepCollectors.Migrations
             modelBuilder.Entity("DataAccessLayer.DataModels.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.DataModels.Post", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Likes");
                 });
 
             modelBuilder.Entity("DataAccessLayer.DataModels.Product", b =>
