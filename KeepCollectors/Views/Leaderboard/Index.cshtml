@@ -1,29 +1,112 @@
-﻿@model List<KeepCollectors.Models.LeaderboardViewModel>
+@model List<KeepCollectors.Models.LeaderboardViewModel>
 
 @{
     ViewData["Title"] = "Leaderboard";
+    var topThree = Model.Take(3).ToList();
+    var rest = Model.Skip(3).ToList();
+    var totalCollectors = Model.Count;
+    var totalItems = Model.Sum(x => x.totalItems);
+    var totalValue = Model.Sum(x => x.TotalValue);
 }
 
-<h2 class="mb-4">Leaderboard</h2>
+<link rel="stylesheet" href="~/css/leaderboard.css" asp-append-version="true" />
 
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>User</th>
-            <th>Total Items</th>
-            <th>Total Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var entry in Model)
-        {
-            <tr>
-                <td>#@entry.Rank</td>
-                <td>@entry.UserName</td>
-                <td>@entry.totalItems</td>
-                <td>@entry.TotalValue.ToString("C")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<section class="leaderboard-page">
+    <div class="leaderboard-hero">
+        <div>
+            <p class="eyebrow">Collectors Keep Rankings</p>
+            <h1>Leaderboard</h1>
+            <p class="hero-text">
+                See which collectors are building the strongest keeps based on total collection value and items collected.
+            </p>
+        </div>
+
+        <div class="hero-stats">
+            <div class="stat-card">
+                <span>@totalCollectors</span>
+                <p>Collectors</p>
+            </div>
+            <div class="stat-card">
+                <span>@totalItems</span>
+                <p>Total Items</p>
+            </div>
+            <div class="stat-card">
+                <span>@totalValue.ToString("C0")</span>
+                <p>Keep Value</p>
+            </div>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="leaderboard-empty">
+            <div class="empty-icon">🏆</div>
+            <h2>No collectors ranked yet</h2>
+            <p>Once users start saving or purchasing items, the leaderboard will show the top collectors here.</p>
+            <a asp-controller="Products" asp-action="Index" class="leaderboard-btn">Browse Products</a>
+        </div>
+    }
+    else
+    {
+        <div class="podium-grid">
+            @foreach (var entry in topThree)
+            {
+                var rankClass = entry.Rank == 1 ? "gold" : entry.Rank == 2 ? "silver" : "bronze";
+                <article class="podium-card @rankClass">
+                    <div class="rank-badge">#@entry.Rank</div>
+                    <div class="collector-avatar">
+                        @((entry.UserName ?? "U").Substring(0, 1).ToUpper())
+                    </div>
+                    <h2>@entry.UserName</h2>
+                    <p class="collector-title">
+                        @(entry.Rank == 1 ? "Top Keeper" : entry.Rank == 2 ? "Elite Collector" : "Rising Collector")
+                    </p>
+                    <div class="podium-meta">
+                        <span>@entry.totalItems items</span>
+                        <strong>@entry.TotalValue.ToString("C")</strong>
+                    </div>
+                </article>
+            }
+        </div>
+
+        <div class="leaderboard-panel">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Full Rankings</p>
+                    <h2>Collector Standings</h2>
+                </div>
+                <span class="ranking-pill">Sorted by value</span>
+            </div>
+
+            <div class="leaderboard-list">
+                @foreach (var entry in Model)
+                {
+                    var rowClass = entry.Rank <= 3 ? "featured-row" : "";
+                    <div class="leaderboard-row @rowClass">
+                        <div class="row-rank">#@entry.Rank</div>
+
+                        <div class="row-user">
+                            <div class="small-avatar">
+                                @((entry.UserName ?? "U").Substring(0, 1).ToUpper())
+                            </div>
+                            <div>
+                                <strong>@entry.UserName</strong>
+                                <p>@(entry.Rank == 1 ? "Highest collection value" : "Collector")</p>
+                            </div>
+                        </div>
+
+                        <div class="row-stat">
+                            <span>Items</span>
+                            <strong>@entry.totalItems</strong>
+                        </div>
+
+                        <div class="row-stat value-stat">
+                            <span>Total Value</span>
+                            <strong>@entry.TotalValue.ToString("C")</strong>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</section>
