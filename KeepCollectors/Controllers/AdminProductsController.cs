@@ -47,7 +47,8 @@ namespace KeepCollectors.Controllers
                 Description = model.Description,
                 Price = model.Price,
                 QuantityAvailable = model.QuantityAvailable,
-                ImagePath = await ResolveImagePath(model)
+                ImagePath = await ResolveImagePath(model),
+                Category = model.Category
             };
 
             _context.Products.Add(product);
@@ -67,7 +68,9 @@ namespace KeepCollectors.Controllers
                 Description = product.Description,
                 Price = product.Price,
                 QuantityAvailable = product.QuantityAvailable,
-                ExistingImagePath = product.ImagePath
+                ExistingImagePath = product.ImagePath,
+                Category = product.Category
+
             };
 
             return View(vm); ;
@@ -86,6 +89,7 @@ namespace KeepCollectors.Controllers
             product.Description = model.Description;
             product.Price = model.Price;
             product.QuantityAvailable = model.QuantityAvailable;
+            product.Category = model.Category;
 
             // Only change image if they provided a new URL or uploaded a file
             var newImage = await ResolveImagePath(model);

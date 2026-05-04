@@ -89,7 +89,8 @@ using (var scope = app.Services.CreateScope())
                 Description = "Iconic Spider-Man comic for collectors. Great condition reprint for display.",
                 Price = 29.99m,
                 QuantityAvailable = 10,
-                ImagePath = "/images/products/spiderman.jpg"
+                ImagePath = "/images/products/spiderman.jpg",
+                Category = Product.ProductCategory.Comics
             },
             new Product
             {
@@ -97,7 +98,8 @@ using (var scope = app.Services.CreateScope())
                 Description = "Original handheld console. Tested and working. Perfect for retro collectors.",
                 Price = 119.99m,
                 QuantityAvailable = 4,
-                ImagePath = "/images/products/gameboy.jpg"
+                ImagePath = "/images/products/gameboy.jpg",
+                Category = Product.ProductCategory.RetroGames
             },
             new Product
             {
@@ -105,7 +107,8 @@ using (var scope = app.Services.CreateScope())
                 Description = "Fan-favorite Charizard holo style card. Great for Pokémon collectors.",
                 Price = 349.99m,
                 QuantityAvailable = 2,
-                ImagePath = "/images/products/charizard.jpg"
+                ImagePath = "/images/products/charizard.jpg",
+                Category = Product.ProductCategory.Cards
             }
         );
 

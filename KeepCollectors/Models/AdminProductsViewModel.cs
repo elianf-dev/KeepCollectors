@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataAccessLayer.DataModels;
 using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace KeepCollectors.Models
 {
@@ -29,5 +30,7 @@ namespace KeepCollectors.Models
 
         // For Edit page preview
         public string? ExistingImagePath { get; set; }
+        [Required]
+        public Product.ProductCategory Category { get; set; }
     }
 }

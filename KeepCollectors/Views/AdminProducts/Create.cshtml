@@ -28,6 +28,14 @@
                 <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe condition, rarity, and collector appeal."></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
+            <div class="mb-3">
+                <label asp-for="Category" class="form-label"></label>
+                <select asp-for="Category"
+                        asp-items="Html.GetEnumSelectList<DataAccessLayer.DataModels.Product.ProductCategory>()"
+                        class="form-control">
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
         </div>
 
         <div class="admin-form-section">

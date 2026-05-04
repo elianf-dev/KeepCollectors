@@ -15,7 +15,7 @@ namespace KeepCollectors.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index(ProductCategory? category)
+        public async Task<IActionResult> Index(ProductCategory? category, string? searchTerm)
         {
             var products = _context.Products.AsQueryable();
 
@@ -24,7 +24,21 @@ namespace KeepCollectors.Controllers
                 products = products.Where(p => p.Category == category.Value);
             }
 
-            return View(await products.ToListAsync());
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                searchTerm = searchTerm.Trim();
+
+                products = products.Where(p =>
+                    p.Name.Contains(searchTerm) ||
+                    (p.Description != null && p.Description.Contains(searchTerm)));
+            }
+
+            ViewBag.CurrentCategory = category?.ToString();
+            ViewBag.SearchTerm = searchTerm;
+
+            return View(await products
+                .OrderBy(p => p.Name)
+                .ToListAsync());
         }
 
         public async Task<IActionResult> Details(int id)

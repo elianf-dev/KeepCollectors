@@ -3,66 +3,104 @@
 @{
     ViewData["Title"] = "Products";
 
-    var category = Context.Request.Query["category"];
+    string? category = ViewBag.CurrentCategory as string;
+    string? searchTerm = ViewBag.SearchTerm as string;
+
+    string pageTitle;
+
+    if (!string.IsNullOrWhiteSpace(searchTerm) && !string.IsNullOrWhiteSpace(category))
+    {
+        pageTitle = $"Search results for \"{searchTerm}\" in {category}";
+    }
+    else if (!string.IsNullOrWhiteSpace(searchTerm))
+    {
+        pageTitle = $"Search results for \"{searchTerm}\"";
+    }
+    else if (!string.IsNullOrWhiteSpace(category))
+    {
+        pageTitle = $"Browse {category}";
+    }
+    else
+    {
+        pageTitle = "All Products";
+    }
 }
 
 <div class="container mt-4">
 
-    <h2 class="text-center mt-4">
-        @(string.IsNullOrEmpty(category) || category == "All"
-                ? "All Products"
-                : "Browse " + category)
-    </h2>
+    <div class="text-center mb-4">
+        <h2 class="fw-bold">@pageTitle</h2>
 
-    <!-- Product Grid -->
-    <div class="row g-4">
-        @foreach (var p in Model)
+        @if (!string.IsNullOrWhiteSpace(searchTerm))
         {
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card h-100 shadow-sm">
+            <a asp-controller="Products" asp-action="Index" class="btn btn-sm btn-outline-secondary mt-2">
+                Clear Search
+            </a>
+        }
+    </div>
 
-                    <img src="@(string.IsNullOrWhiteSpace(p.ImagePath)
-                                                                                                   ? "https://via.placeholder.com/600x400?text=No+Image"
-                                                                                                   : p.ImagePath)"
-                                                                                                                 class="card-img-top"
-                                                                                                                 style="height: 220px; object-fit: cover;"
-                                                                                                                 alt="@p.Name" />
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            No products found. Try another search or category.
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var p in Model)
+            {
+                var description = string.IsNullOrWhiteSpace(p.Description)
+                    ? "No description available."
+                    : p.Description.Length > 90
+                        ? p.Description.Substring(0, 90) + "..."
+                        : p.Description;
 
-                    <div class="card-body d-flex flex-column">
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <div class="card h-100 shadow-sm">
 
-                        <h5 class="card-title fw-semibold">@p.Name</h5>
+                        <img src="@(string.IsNullOrWhiteSpace(p.ImagePath)
+                                                                                         ? "/images/products/placeholder.png"
+                                                                                         : p.ImagePath)"
+                             class="card-img-top"
+                             style="height: 220px; object-fit: cover;"
+                             alt="@p.Name" />
 
-                        <p class="card-text text-muted">
-                            @(string.IsNullOrWhiteSpace(p.Description)
-                                                    ? "No description available."
-                                                    : (p.Description.Length > 90
-                                                    ? p.Description.Substring(0, 90) + "..."
-                                                    : p.Description))
-                    </p>
-                    <p class="text-muted mb-2">In Stock: @p.QuantityAvailable</p>
+                        <div class="card-body d-flex flex-column">
 
+                            <div class="d-flex justify-content-between align-items-start gap-2">
+                                <h5 class="card-title fw-semibold">@p.Name</h5>
+                                <span class="badge bg-secondary">@p.Category</span>
+                            </div>
 
-                        <div class="mt-auto d-grid">
-                            <a asp-controller="Products"
-                               asp-action="Details"
-                               asp-route-id="@p.ProductID"
-                               class="btn btn-primary btn-sm">
-                                View Item
-                            </a>
-                            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
-                                @Html.AntiForgeryToken()
-                                <input type="hidden" name="productId" value="@p.ProductID" />
-                                <input type="hidden" name="quantity" value="1" />
+                            <p class="card-text text-muted">@description</p>
 
-                                <button type="submit" class="btn btn-primary-two w-100">
-                                    Add to Cart
-                                </button>
-                            </form>
+                            <p class="fw-bold mb-1">@p.Price.ToString("C")</p>
+                            <p class="text-muted mb-2">In Stock: @p.QuantityAvailable</p>
+
+                            <div class="mt-auto d-grid">
+                                <a asp-controller="Products"
+                                       asp-action="Details"
+                                       asp-route-id="@p.ProductID"
+                                       class="btn btn-primary btn-sm">
+                                    View Item
+                                </a>
+
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post" class="mt-2">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="productId" value="@p.ProductID" />
+                                    <input type="hidden" name="quantity" value="1" />
+
+                                    <button type="submit" class="btn btn-primary-two w-100">
+                                        Add to Cart
+                                    </button>
+                                </form>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
-            </div>
-                }
-    </div>
+            }
+        </div>
+    }
 </div>
