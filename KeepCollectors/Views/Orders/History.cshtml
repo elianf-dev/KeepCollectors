@@ -1,0 +1,66 @@
+﻿@model List<DataAccessLayer.DataModels.Order>
+
+@{
+    ViewData["Title"] = "Order History";
+}
+
+<div class="order-history-page">
+    <h2 class="order-history-title">Order History</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p>You have not placed any orders yet.</p>
+    }
+    else
+    {
+        @foreach (var order in Model)
+        {
+            <div class="order-card">
+                <div class="order-header">
+                    <h4>Order #@order.OrderID</h4>
+                    <span>@order.DateOrdered.ToString("MMMM dd, yyyy")</span>
+                </div>
+
+                <div class="order-items">
+                    @if (order.OrderItems != null)
+                    {
+                        foreach (var item in order.OrderItems)
+                        {
+                            if (item.Product != null)
+                            {
+                                var lineTotal = item.Product.Price * item.Quantity;
+
+                                <div class="order-item-row">
+                                    <div class="order-item-info">
+                                        <img src="@Url.Content(item.Product.ImagePath)"
+                                             alt="@item.Product.Name"
+                                             class="order-item-image" />
+
+                                        <div>
+                                            <div class="order-item-name">@item.Product.Name</div>
+                                            <div class="order-item-desc">@item.Product.Description</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="order-item-details">
+                                        <span>Qty: @item.Quantity</span>
+                                        <span>Price: $@item.Product.Price.ToString("F2")</span>
+                                        <span>Total: $@lineTotal.ToString("F2")</span>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        var orderTotal = order.OrderItems
+                            .Where(i => i.Product != null)
+                            .Sum(i => i.Product.Price * i.Quantity);
+
+                        <div style="text-align:right; margin-top:10px;">
+                            <strong>Order Total: $@orderTotal.ToString("F2")</strong>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using DataAccessLayer.Data;
+﻿using DataAccessLayer.Data;
 using DataAccessLayer.DataModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using static DataAccessLayer.DataModels.Product;
 
 namespace KeepCollectors.Controllers
 {
@@ -14,10 +15,16 @@ namespace KeepCollectors.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ProductCategory? category)
         {
-            var products = await _context.Products.ToListAsync();
-            return View(products);
+            var products = _context.Products.AsQueryable();
+
+            if (category.HasValue)
+            {
+                products = products.Where(p => p.Category == category.Value);
+            }
+
+            return View(await products.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int id)

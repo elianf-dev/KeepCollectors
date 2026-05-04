@@ -1,0 +1,167 @@
+@model List<DataAccessLayer.DataModels.Post>
+@using System.Security.Claims
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/community.css" asp-append-version="true" />
+}
+
+<div class="community-page">
+    <section class="community-hero">
+        <div>
+            <p class="community-kicker">Collectors Keep Social</p>
+            <h1>Community Posts</h1>
+            <p>Show off your newest finds, rare collectibles, favorite pickups, and collection updates.</p>
+        </div>
+        <div class="community-hero-badge">
+            <span>@Model.Count</span>
+            <small>posts shared</small>
+        </div>
+    </section>
+
+    <div class="container community-container">
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger community-alert">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <div>@error.ErrorMessage</div>
+                }
+            </div>
+        }
+
+        <div class="create-post-card">
+            <div class="create-post-header">
+                <div class="avatar-circle">@(User.Identity?.Name?.Substring(0, 1).ToUpper() ?? "?")</div>
+                <div>
+                    <h4>Share with the Keep</h4>
+                    <p>Post a collection update, photo, or collector story.</p>
+                </div>
+            </div>
+
+            <div id="post-error" class="text-danger text-center mb-2"></div>
+
+            <form id="create-post-form" asp-action="CreatePost" method="post" enctype="multipart/form-data">
+                <textarea name="content" class="form-control community-textarea" rows="4"
+                          placeholder="What did you add to your collection today?"></textarea>
+
+                <div class="post-actions-row">
+                    <label class="upload-box">
+                        <span>Upload Image</span>
+                        <small>JPG, PNG, or GIF</small>
+                        <input type="file" name="image" class="form-control" />
+                    </label>
+
+                    <button class="btn community-post-btn" type="submit">Publish Post</button>
+                </div>
+            </form>
+        </div>
+
+        @{
+            var currentUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        }
+
+        @if (!Model.Any())
+        {
+            <div class="empty-feed-card">
+                <h3>No posts yet</h3>
+                <p>Be the first collector to share something with the community.</p>
+            </div>
+        }
+
+        <div class="community-feed">
+            @foreach (var post in Model)
+            {
+                <article class="post-card">
+                    <div class="post-topline"></div>
+
+                    <div class="post-header">
+                        <div class="post-user-info">
+                            <div class="avatar-circle">@post.User.UserName.Substring(0, 1).ToUpper()</div>
+                            <div>
+                                <h5>@post.User.UserName</h5>
+                                <small>@post.CreatedAt.ToString("MMM dd, yyyy • h:mm tt")</small>
+                            </div>
+                        </div>
+
+                        @if (post.UserId == currentUserId)
+                        {
+                            <form asp-action="DeletePost" method="post" class="m-0">
+                                <input type="hidden" name="postId" value="@post.PostId" />
+                                <button type="submit"
+                                        class="btn btn-sm delete-post-btn"
+                                        onclick="return confirm('Are you sure you want to delete this post?');">
+                                    Delete
+                                </button>
+                            </form>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(post.Content))
+                    {
+                        <p class="post-content">@post.Content</p>
+                    }
+
+                    @if (!string.IsNullOrEmpty(post.ImagePath))
+                    {
+                        <div class="post-image-wrap">
+                            <img src="@post.ImagePath" alt="Community post image" />
+                        </div>
+                    }
+
+                    <div class="post-engagement">
+                        <form asp-action="Like" method="post">
+                            <input type="hidden" name="postId" value="@post.PostId" />
+                            <button class="btn like-btn" type="submit">♥ Like <span>@post.Likes.Count</span></button>
+                        </form>
+
+                        <span class="comment-count">@post.Comments.Count comment@(post.Comments.Count == 1 ? "" : "s")</span>
+                    </div>
+
+                    <div class="comments-section">
+                        @foreach (var comment in post.Comments)
+                        {
+                            <div class="comment-bubble">
+                                <strong>@comment.User.UserName</strong>
+                                <span>@comment.Content</span>
+                            </div>
+                        }
+
+                        <form asp-action="AddComment" method="post" class="comment-form">
+                            <input type="hidden" name="postId" value="@post.PostId" />
+                            <input type="text" name="content" class="form-control"
+                                   placeholder="Add a comment and press Enter..." />
+                        </form>
+                    </div>
+                </article>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector("#create-post-form");
+            const errorDiv = document.getElementById("post-error");
+            const textarea = document.querySelector("textarea[name='content']");
+            const fileInput = document.querySelector("input[name='image']");
+
+            form.addEventListener("submit", function (e) {
+                const content = textarea.value.trim();
+                const image = fileInput.files.length;
+
+                errorDiv.textContent = "";
+                textarea.classList.remove("border-danger");
+
+                if (!content && image === 0) {
+                    e.preventDefault();
+                    errorDiv.textContent = "Your post must include text or an image.";
+                    textarea.classList.add("border-danger");
+                    form.classList.remove("shake");
+                    void form.offsetWidth;
+                    form.classList.add("shake");
+                }
+            });
+        });
+    </script>
+}

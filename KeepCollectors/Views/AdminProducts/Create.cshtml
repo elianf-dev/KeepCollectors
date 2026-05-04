@@ -3,50 +3,69 @@
     ViewData["Title"] = "Add Product";
 }
 
-<h2 class="mb-3">Add Product</h2>
-
-<form asp-action="Create" method="post" enctype="multipart/form-data">
-    <div class="mb-3">
-        <label asp-for="Name" class="form-label"></label>
-        <input asp-for="Name" class="form-control" />
-        <span asp-validation-for="Name" class="text-danger"></span>
-    </div>
-
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 mb-3">
-            <label asp-for="Price" class="form-label"></label>
-            <input asp-for="Price" class="form-control" />
-            <span asp-validation-for="Price" class="text-danger"></span>
+<div class="admin-page">
+    <div class="admin-hero">
+        <div>
+            <p class="admin-eyebrow">New Listing</p>
+            <h2>Add Product</h2>
+            <p class="admin-subtitle">Create a collectible listing with pricing, stock, and display artwork.</p>
         </div>
 
-        <div class="col-md-4 mb-3">
-            <label asp-for="QuantityAvailable" class="form-label"></label>
-            <input asp-for="QuantityAvailable" class="form-control" />
-            <span asp-validation-for="QuantityAvailable" class="text-danger"></span>
+        <a class="btn btn-secondary" asp-action="Index">Back to Admin</a>
+    </div>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data" class="admin-form-panel">
+        <div class="admin-form-section">
+            <h3>Product Details</h3>
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="Example: Dragon Shield Card Binder" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Describe condition, rarity, and collector appeal."></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
         </div>
-    </div>
 
-    <hr />
+        <div class="admin-form-section">
+            <h3>Pricing & Stock</h3>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Price" class="form-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
 
-    <div class="mb-3">
-        <label asp-for="ImageUrl" class="form-label"></label>
-        <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
-    </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="QuantityAvailable" class="form-label"></label>
+                    <input asp-for="QuantityAvailable" class="form-control" />
+                    <span asp-validation-for="QuantityAvailable" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
 
-    <div class="mb-3">
-        <label asp-for="ImageFile" class="form-label"></label>
-        <input asp-for="ImageFile" class="form-control" type="file" />
-    </div>
+        <div class="admin-form-section">
+            <h3>Product Image</h3>
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label"></label>
+                <input asp-for="ImageUrl" class="form-control" placeholder="https://..." />
+            </div>
 
-    <button class="btn btn-success" type="submit">Create</button>
-    <a class="btn btn-secondary" asp-action="Index">Cancel</a>
-</form>
+            <div class="mb-3">
+                <label asp-for="ImageFile" class="form-label"></label>
+                <input asp-for="ImageFile" class="form-control" type="file" />
+            </div>
+        </div>
+
+        <div class="admin-form-actions">
+            <button class="btn btn-success" type="submit">Create Product</button>
+            <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+        </div>
+    </form>
+</div>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

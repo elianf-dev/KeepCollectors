@@ -2,39 +2,99 @@
 
 @{
     ViewData["Title"] = "Admin - Products";
+    var products = Model.ToList();
+    var totalProducts = products.Count;
+    var totalUnits = products.Sum(p => p.QuantityAvailable);
+    var totalValue = products.Sum(p => p.Price * p.QuantityAvailable);
+    var lowStock = products.Count(p => p.QuantityAvailable <= 3);
 }
 
-<h2 class="mb-3">Admin - Products</h2>
+<div class="admin-page">
+    <div class="admin-hero">
+        <div>
+            <p class="admin-eyebrow">Inventory Command</p>
+            <h2>Admin Products</h2>
+            <p class="admin-subtitle">Manage listings, prices, inventory levels, and collectible images.</p>
+        </div>
 
-<p>
-    <a class="btn btn-success" asp-action="Create">+ Add Product</a>
-</p>
+        <a class="btn btn-success admin-primary-action" asp-action="Create">Add Product</a>
+    </div>
 
-<table class="table table-striped align-middle">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Qty</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var p in Model)
-        {
-            <tr>
-                <td style="width:120px;">
-                    <img src="@(string.IsNullOrWhiteSpace(p.ImagePath) ? "/images/products/placeholder.png" : p.ImagePath)"
-                         style="height:60px; object-fit:cover;" />
-                </td>
-                <td>@p.Name</td>
-                <td>$@p.Price</td>
-                <td>@p.QuantityAvailable</td>
-                <td class="text-end">
-                    <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <div class="admin-stats">
+        <div class="admin-stat">
+            <span>Total Products</span>
+            <strong>@totalProducts</strong>
+        </div>
+        <div class="admin-stat">
+            <span>Units In Stock</span>
+            <strong>@totalUnits</strong>
+        </div>
+        <div class="admin-stat">
+            <span>Inventory Value</span>
+            <strong>@totalValue.ToString("C")</strong>
+        </div>
+        <div class="admin-stat @(lowStock > 0 ? "admin-stat-warning" : "")">
+            <span>Low Stock</span>
+            <strong>@lowStock</strong>
+        </div>
+    </div>
+
+    <div class="admin-panel">
+        <div class="admin-panel-header">
+            <div>
+                <h3>Product Catalog</h3>
+                <p>Review active listings and update item details before the final demo.</p>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table admin-table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var p in products)
+                    {
+                        <tr>
+                            <td>
+                                <div class="admin-product-cell">
+                                    <img src="@(string.IsNullOrWhiteSpace(p.ImagePath) ? "/images/products/placeholder.png" : p.ImagePath)"
+                                         alt="@p.Name" />
+                                    <div>
+                                        <strong>@p.Name</strong>
+                                        <span>@(string.IsNullOrWhiteSpace(p.Description) ? "No description added." : p.Description)</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@p.Price.ToString("C")</td>
+                            <td>@p.QuantityAvailable</td>
+                            <td>
+                                @if (p.QuantityAvailable <= 0)
+                                {
+                                    <span class="admin-badge danger">Out of Stock</span>
+                                }
+                                else if (p.QuantityAvailable <= 3)
+                                {
+                                    <span class="admin-badge warning">Low Stock</span>
+                                }
+                                else
+                                {
+                                    <span class="admin-badge good">Active</span>
+                                }
+                            </td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@p.ProductID">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
