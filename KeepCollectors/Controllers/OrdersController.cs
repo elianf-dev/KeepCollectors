@@ -16,7 +16,6 @@ public class OrdersController : Controller
         _userManager = userManager;
     }
 
-    // ✅ LOAD CHECKOUT PAGE
     [Authorize]
     public async Task<IActionResult> Checkout()
     {
@@ -30,7 +29,6 @@ public class OrdersController : Controller
         return View(cart);
     }
 
-    // ✅ PLACE ORDER (MAIN LOGIC)
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> PlaceOrder()
@@ -64,7 +62,6 @@ public class OrdersController : Controller
                 return RedirectToAction("Checkout");
             }
 
-            // 🔥 Update inventory
             product.QuantityAvailable -= item.Quantity;
 
             order.OrderItems.Add(new OrderItem
@@ -78,7 +75,7 @@ public class OrdersController : Controller
 
         _context.Orders.Add(order);
 
-        // 🔥 CLEAR CART
+  
         _context.CartItems.RemoveRange(cart.CartItems);
 
         await _context.SaveChangesAsync();
@@ -86,7 +83,6 @@ public class OrdersController : Controller
         return RedirectToAction("Confirmation");
     }
 
-    // ✅ CONFIRMATION PAGE
     [Authorize]
     public IActionResult Confirmation()
     {

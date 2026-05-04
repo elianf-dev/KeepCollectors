@@ -72,16 +72,42 @@ namespace KeepCollectors.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
             var existing = _context.Likes
                 .FirstOrDefault(l => l.PostId == postId && l.UserId == userId);
 
+            bool liked;
+
             if (existing == null)
             {
-                _context.Likes.Add(new Like { PostId = postId, UserId = userId });
-                _context.SaveChanges();
+                _context.Likes.Add(new Like
+                {
+                    PostId = postId,
+                    UserId = userId
+                });
+
+                liked = true;
+            }
+            else
+            {
+                _context.Likes.Remove(existing);
+                liked = false;
             }
 
-            return RedirectToAction("Index");
+            _context.SaveChanges();
+
+            var likeCount = _context.Likes.Count(l => l.PostId == postId);
+
+            return Json(new
+            {
+                success = true,
+                liked,
+                likeCount
+            });
         }
 
         [HttpPost]
